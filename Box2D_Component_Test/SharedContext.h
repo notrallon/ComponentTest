@@ -3,7 +3,7 @@
 #include <Box2D/Box2D.h>
 
 struct SharedContext {
-	SharedContext() {}
+	SharedContext() : PhysicsWorld(nullptr) {}
 	
-	b2World* world;
+	b2World* PhysicsWorld;
 };

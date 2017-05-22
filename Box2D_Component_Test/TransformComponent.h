@@ -12,6 +12,9 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	const sf::Vector2f& GetPosition() const;
+    const sf::Vector2f& GetSize() const;
+
+    void SetPosition(float x, float y);
 
 	void Print();
 

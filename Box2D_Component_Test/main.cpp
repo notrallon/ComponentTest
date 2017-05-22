@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "SpriteComponent.h"
 #include "TransformComponent.h"
+#include "BoxColliderComponent.h"
 #include "SharedContext.h"
 
 #include <iostream>
@@ -13,26 +14,36 @@ int main() {
 
 	window.create({ 1280, 720, 32 }, "Title");
 
-	GameObject player;
+	SharedContext sContext;
+    b2World world = b2World(b2Vec2(0.0f, 0.0f));
+
+    sContext.PhysicsWorld = &world;
+    
+    GameObject player(&sContext);
 	sf::Texture* texture = new sf::Texture();
 
-	SharedContext sContext;
-	b2World world = b2World(b2Vec2(0.0f, 10.0f));
-	sContext.world = &world;
+    player.AddComponent<BoxColliderComponent>();
 
 	texture->loadFromFile("goku.png");
 	SpriteComponent* sprite = player.AddComponent<SpriteComponent>();
 	//SpriteComponent* sprite = new SpriteComponent();
 	sprite->SetTexture(*texture);
 
-	player.AddComponent(sprite);
+	//player.AddComponent(sprite);
 
 	player.GetComponent<SpriteComponent>();
 
 	player.GetComponent<TransformComponent>()->Print();
 
+    GameObject collisionBox(&sContext);
+    collisionBox.AddComponent<BoxColliderComponent>();
+
 	sf::Clock clock;
 	sf::Time time;
+
+    float32 timeStep = 1.0f / 60.0f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 2;
 
 	while (window.isOpen()) {
 		sf::Event evnt;
@@ -47,10 +58,11 @@ int main() {
 				break;
 			}
 		}
+        world.Step(timeStep, velocityIterations, positionIterations);
 		player.Update(dt);
 
 		window.clear(sf::Color::Magenta);
-		sprite->Draw(window);
+        player.Draw(window);
 		window.display();
 	}
 }

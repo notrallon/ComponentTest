@@ -48,7 +48,9 @@ public:
 	}
 
 	const TransformComponent& GetTransform() const;
-	const SharedContext& GetContext() const;
+	SharedContext* GetContext() const;
+
+    void SetPosition(float x, float y);
 
 private:
 	TransformComponent* m_Transform;

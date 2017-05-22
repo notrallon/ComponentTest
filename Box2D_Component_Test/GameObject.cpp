@@ -28,6 +28,10 @@ const TransformComponent& GameObject::GetTransform() const {
 	return *m_Transform;
 }
 
-const SharedContext& GameObject::GetContext() const {
-	return *m_Context;
+SharedContext* GameObject::GetContext() const {
+	return m_Context;
+}
+
+void GameObject::SetPosition(float x, float y) {
+    m_Transform->SetPosition(x, y);
 }
