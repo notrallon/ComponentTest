@@ -14,6 +14,8 @@ public:
 
     const sf::Vector2f& GetPosition() const;
 
+    void SetStatic(bool isStatic);
+
 private:
 	b2Body*      m_Body;
 };

@@ -23,5 +23,7 @@ void SpriteComponent::Draw(sf::RenderWindow& window) {
 }
 
 void SpriteComponent::SetTexture(sf::Texture& texture) {
+    sf::Image image = texture.copyToImage();
 	m_Sprite->setTexture(texture);
+    m_Sprite->setScale(sf::Vector2f(1.0f / 32.0f, 1.0f / 32.0f));
 }
